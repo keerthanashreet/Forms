@@ -1,0 +1,50 @@
+<form #validform="ngform" (ngSubmit)="onSubmit()" app-validator>
+  
+        <div class="form-group">
+         
+          <label for="name">Name</label>
+          <input type="text" class="form-control" id="name"
+                 required minlength="6"
+                 [(ngModel)]="model.name" name="name" #name="ngModel">
+                 <div *ngIf="name.invalid && (name.dirty || name.touched)"class="alert alert-danger">
+                    <div *ngIf="name.errors.required">  Name is required.</div>
+                    <div *ngIf="name.errors.minlength"> Name must be at least 6 characters long. </div>
+                 </div>
+        </div>
+ <div class="cross-validation" [class.cross-validation-error]="validForm.errors?.identityRevealed && (validForm.touched || vallidForm.dirty)">
+                  <div class="form-group">
+                     <label for="oldPassword">Old Password</label>
+                     <input type="text"  class="form-control" id="oldPassword"
+                       required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])"
+                       [(ngModel)]="model.oldPassword" name="oldPassword" #oldPassword="ngModel">
+                     <div *ngIf="oldPassword.errors?.pattern">
+                                 Enter correct Password
+                     </div> 
+                  </div>
+        
+                  <div class="form-group">
+                    <label for="newPassword">New Password </label>
+                    <input type="text"  class="form-control"  id="newPassword"
+                        required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])"
+                        [(ngModel)]="model.newPassword" name="newPassword" #newPassword="ngModel">
+                        <div *ngIf="newPassword.errors?.pattern">
+                                        Enter valid Password
+                        </div>
+                  </div>
+            <div *ngIf="validform.errors?.identityRevealed && (validform.touched || validform.dirty)" class="cross-validation-error-message alert alert-danger">
+                        Old Password should not match New Password.
+            </div>
+ 
+                  <div class="form-group">
+                     <label for="confirmPassword">Confirm Password </label>
+                     <input type="text"  class="form-control"  id="confirmPassword"
+                      required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])"
+                      [(ngModel)]="model.confirmPassword" name="confirmPassword" #confirmPassword="ngModel">
+                      <div *ngIf="confirmPassword.errors?.pattern">
+                                Enter valid Password
+                    </div>
+                  </div>
+  </div>                
+ <button type="submit" class="btn btn-success" [disabled]="!validForm.form.valid">Submit</button>
+
+</form>
